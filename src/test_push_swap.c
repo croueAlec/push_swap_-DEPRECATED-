@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 13:36:26 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/10 14:23:03 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/10 19:31:26 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,18 @@ int	num_len(long n)
 	return (length);
 }
 
+static size_t	move_index(char *str, long ln)
+{
+	size_t	i;
+
+	i = num_len(ln);
+	while (str[i] != '\0' && str[i] == ' ')
+	{
+		i++;
+	}
+	return (i);
+}
+
 t_a	*define_a(char *str)
 {
 	long	ln;
@@ -45,16 +57,15 @@ t_a	*define_a(char *str)
 		next_node->next = NULL;
 		ln = ft_atol(str);
 		if (!(ln <= 2147483647 && ln >= -2147483648))
-			return (err_print("invalid number"), NULL); // ajouter un free list
-		str += num_len(ln) + 1;
+			return (err_print("invalid number"), NULL);
+		str += move_index(str, ln);
 		printf("\n>%s<\n", str);
 		node->value = ln;
-		node = next_node;
+		if (*str != '\0')
+			node = next_node;
 	}
-	next_node->next = first_node;
-	first_node->previous = next_node;
-	next_node->value = 99;
-	return (first_node);
+	first_node->previous = node;
+	return (free(next_node), node->next = first_node);
 }
 
 void	lprint(t_a *list)
@@ -68,23 +79,27 @@ void	lprint(t_a *list)
 	{
 		printf("\n%d", list->value);
 		list = list->next;
+		free(list->previous);
 	}
+	free(list);
 }
 
 int	main(int argc, char *argv[])
 {
 	char	*str;
+	char	*tmp;
 	t_a		*list;
 
 	if (argc == 1)
 		return (err_print("too few arguments"), 0);
-	str = ft_jointab(&argv[1], 0, 0);
-	if (!str)
+	tmp = ft_jointab(&argv[1], 0, 0);
+	if (!tmp)
 		return (0);
+	str = ft_strtrim(tmp, " ");
+	printf("\n|%s|\n|%s|\n", str, tmp);
 	list = define_a(str);
 	lprint(list);
-
-	return (0);
+	return (free(tmp), free(str), 0);
 }
 
 void	err_print(char *str)

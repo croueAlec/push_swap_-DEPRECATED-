@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 17:03:44 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/08 17:03:45 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/10 19:28:13 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ char	*ft_jointab(char **tab, size_t i, int length)
 		n = ft_stringcheck(tab[--i]);
 		ft_memmove(&joined[length - n], tab[i], n);
 		length -= n;
-		joined[--length] = ' ';
+		if (i)
+			joined[--length] = ' ';
 	}
 	return (joined);
 }
