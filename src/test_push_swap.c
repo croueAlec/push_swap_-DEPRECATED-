@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 13:36:26 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/08 17:41:48 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/10 14:23:03 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,37 +30,60 @@ int	num_len(long n)
 t_a	*define_a(char *str)
 {
 	long	ln;
-	size_t	i;
 	t_a		*node;
+	t_a		*first_node;
 	t_a		*next_node;
 
-	i = 0;
 	node = malloc(sizeof(t_a));
+	first_node = node;
 	node->previous = NULL;
 	while (*str)
 	{
 		next_node = malloc(sizeof(t_a));
+		node->next = next_node;
 		next_node->previous = node;
 		next_node->next = NULL;
 		ln = ft_atol(str);
 		if (!(ln <= 2147483647 && ln >= -2147483648))
-			return (err_print("invalid number"), NULL);
-		str += num_len(ln);
+			return (err_print("invalid number"), NULL); // ajouter un free list
+		str += num_len(ln) + 1;
+		printf("\n>%s<\n", str);
 		node->value = ln;
+		node = next_node;
 	}
-	return (NULL);
+	next_node->next = first_node;
+	first_node->previous = next_node;
+	next_node->value = 99;
+	return (first_node);
+}
+
+void	lprint(t_a *list)
+{
+	int		temp;
+
+	temp = list->value;
+	printf("\n%d", temp);
+	list = list->next;
+	while (list->value != temp)
+	{
+		printf("\n%d", list->value);
+		list = list->next;
+	}
 }
 
 int	main(int argc, char *argv[])
 {
 	char	*str;
+	t_a		*list;
 
 	if (argc == 1)
 		return (err_print("too few arguments"), 0);
 	str = ft_jointab(&argv[1], 0, 0);
 	if (!str)
 		return (0);
-	define_a(str);
+	list = define_a(str);
+	lprint(list);
+
 	return (0);
 }
 
