@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 13:36:26 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/10 19:31:26 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/10 20:19:15 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,3 +126,7 @@ void	err_print(char *str)
 //
 //
 // note du vendredi 8/12/23, le parsing est fait mes inputs sont safes
+//
+//
+//
+// note du dimanche 10/12/23, verifier les duplicatas de nombres bisou
