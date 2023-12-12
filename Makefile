@@ -6,7 +6,7 @@
 #    By: acroue <acroue@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/11 11:51:52 by acroue            #+#    #+#              #
-#    Updated: 2023/12/10 19:18:31 by acroue           ###   ########.fr        #
+#    Updated: 2023/12/12 08:49:41 by acroue           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Wextra -Werror -g
 RM = rm -rf
 INCLUDE = include/
 SRC_DIR = src
-SRC = ${addprefix ${SRC_DIR}/, test_push_swap.c parsing.c}
+SRC = ${addprefix ${SRC_DIR}/, test_push_swap.c parsing.c swap_functions.c}
 OBJ_DIR = obj
 OBJ = ${addprefix ${OBJ_DIR}/, ${SRC:.c=.o}}
 LIB_DIR = libft

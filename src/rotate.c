@@ -1,32 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/08 14:56:44 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/12 10:56:22 by acroue           ###   ########.fr       */
+/*   Created: 2023/12/12 04:52:32 by acroue            #+#    #+#             */
+/*   Updated: 2023/12/12 04:52:33 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
-
-# include <unistd.h>
-# include <stdlib.h>
-# include "../libft/libft.h"
-
-typedef struct s_a
-{
-	int			value;
-	int			rank;
-	struct s_a	*next;
-	struct s_a	*previous;
-}	t_a;
-
-char	*ft_jointab(char **tab, size_t i, int length);
-void	err_print(char *str);
-t_a		*swap_elements(t_a *list, size_t length);
-
-#endif

@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 13:36:26 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/10 20:19:15 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/12 11:13:27 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,17 @@ static size_t	move_index(char *str, long ln)
 	return (i);
 }
 
-t_a	*define_a(char *str)
+static t_a	*def_next(t_a *node)
+{
+	t_a	*next_node;
+
+	next_node = malloc(sizeof(t_a));
+	next_node->previous = node;
+	next_node->next = NULL;
+	return (next_node);
+}
+
+t_a	*define_a(char *str, size_t length)
 {
 	long	ln;
 	t_a		*node;
@@ -51,19 +61,19 @@ t_a	*define_a(char *str)
 	node->previous = NULL;
 	while (*str)
 	{
-		next_node = malloc(sizeof(t_a));
+		next_node = def_next(node);
 		node->next = next_node;
-		next_node->previous = node;
-		next_node->next = NULL;
 		ln = ft_atol(str);
 		if (!(ln <= 2147483647 && ln >= -2147483648))
 			return (err_print("invalid number"), NULL);
 		str += move_index(str, ln);
-		printf("\n>%s<\n", str);
 		node->value = ln;
+		node->rank = -1;
 		if (*str != '\0')
 			node = next_node;
 	}
+	if (length == 1)
+		node->next = node;
 	first_node->previous = node;
 	return (free(next_node), node->next = first_node);
 }
@@ -73,15 +83,85 @@ void	lprint(t_a *list)
 	int		temp;
 
 	temp = list->value;
-	printf("\n%d", temp);
+	printf("\n%d (%d)", temp, list->rank);
 	list = list->next;
 	while (list->value != temp)
 	{
-		printf("\n%d", list->value);
+		printf("\n%d (%d)", list->value, list->rank);
 		list = list->next;
-		free(list->previous);
+		// free(list->previous);
 	}
-	free(list);
+	// free(list);
+}
+
+static int	check_tab(t_a *list, size_t length)
+{
+	size_t	i;
+	size_t	j;
+	int		value;
+	t_a		*temp;
+
+	i = 0;
+	while (i < length)
+	{
+		value = list->value;
+		// printf("\ncheck %d", value);
+		j = i + 1;
+		temp = list->next;
+		while (j < length)
+		{
+			// printf(" %d", temp->value);
+			if (value == temp->value)
+				return (err_print("duplicate number"), 0);
+			temp = temp->next;
+			j++;
+		}
+		list = list->next;
+		i++;
+	}
+	return (1);
+}
+
+void	free_list(t_a *list, size_t length)
+{
+	size_t	i;
+	t_a		*temp;
+
+	i = 0;
+	while (i < length)
+	{
+		temp = list;
+		// printf("\n\t\t%d\n", list->value);
+		list = list->next;
+		free(temp);
+		i++;
+	}
+}
+
+t_a	*check_rank(t_a *list, size_t length)
+{
+	int		tmp;
+	int		boolean;
+	size_t	i;
+	int		j;
+	t_a		*start;
+
+	start = list;
+	boolean = list->rank;
+	j = 0;
+	while (boolean == -1)
+	{
+		i = -1;
+		while (++i < length)
+			if (tmp > list->value)
+				tmp = list->value;
+		i = -1;
+		while (++i < length)
+			if (tmp == list->value)
+				list->rank = j;
+		j++;
+	}
+	return (start);
 }
 
 int	main(int argc, char *argv[])
@@ -89,6 +169,7 @@ int	main(int argc, char *argv[])
 	char	*str;
 	char	*tmp;
 	t_a		*list;
+	size_t	list_length;
 
 	if (argc == 1)
 		return (err_print("too few arguments"), 0);
@@ -96,9 +177,14 @@ int	main(int argc, char *argv[])
 	if (!tmp)
 		return (0);
 	str = ft_strtrim(tmp, " ");
-	printf("\n|%s|\n|%s|\n", str, tmp);
-	list = define_a(str);
+	list_length = ft_count_words(str, 32);
+	// printf("\n|%s|\n|%s|\n|%zu|\n", str, tmp, list_length);
+	list = define_a(str, list_length);
+	if (!check_tab(list, list_length))
+		return (free(tmp), free(str), free_list(list, list_length), 0);
+	list = check_rank(list, list_length);
 	lprint(list);
+	free_list(list, list_length);
 	return (free(tmp), free(str), 0);
 }
 
