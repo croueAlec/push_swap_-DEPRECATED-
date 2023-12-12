@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 17:03:44 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/10 19:28:13 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/12 17:31:38 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*ft_jointab(char **tab, size_t i, int length)
 	{
 		n = ft_stringcheck(tab[i]);
 		if (n == 0)
-			return (err_print("invalid input"), NULL);
+			return (rprint("invalid input"), NULL);
 		length += n;
 		i++;
 	}

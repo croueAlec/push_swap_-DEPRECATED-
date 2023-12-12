@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 13:36:26 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/12 11:45:41 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/12 17:59:10 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,23 +49,38 @@ static t_a	*def_next(t_a *node)
 	return (next_node);
 }
 
+void	fr(t_a *list)
+{
+	t_a	*next;
+
+	next = list->next;
+	while (list->next)
+	{
+		next = list->next;
+		free(list);
+		printf("a");
+		list = next->next;
+	}
+	free(list);
+}
+
 t_a	*define_a(char *str, size_t length)
 {
 	long	ln;
 	t_a		*node;
-	t_a		*first_node;
+	t_a		*frst;
 	t_a		*next_node;
 
 	node = malloc(sizeof(t_a));
-	first_node = node;
+	frst = node;
 	node->previous = NULL;
 	while (*str)
 	{
 		next_node = def_next(node);
 		node->next = next_node;
 		ln = ft_atol(str);
-		if (!(ln <= 2147483647 && ln >= -2147483648))
-			return (err_print("invalid number"), NULL);
+		if (!(ln <= INT_MAX && ln >= INT_MIN))
+			return (rprint("invalid number"), fr(frst), NULL); // check le free partiel
 		str += move_index(str, ln);
 		node->value = ln;
 		node->rank = -1;
@@ -74,8 +89,8 @@ t_a	*define_a(char *str, size_t length)
 	}
 	if (length == 1)
 		node->next = node;
-	first_node->previous = node;
-	return (free(next_node), node->next = first_node);
+	frst->previous = node;
+	return (free(next_node), node->next = frst);
 }
 
 void	lprint(t_a *list)
@@ -94,40 +109,14 @@ void	lprint(t_a *list)
 	// free(list);
 }
 
-static int	check_tab(t_a *list, size_t length)
-{
-	size_t	i;
-	size_t	j;
-	int		value;
-	t_a		*temp;
-
-	i = 0;
-	while (i < length)
-	{
-		value = list->value;
-		// printf("\ncheck %d", value);
-		j = i + 1;
-		temp = list->next;
-		while (j < length)
-		{
-			// printf(" %d", temp->value);
-			if (value == temp->value)
-				return (err_print("duplicate number"), 0);
-			temp = temp->next;
-			j++;
-		}
-		list = list->next;
-		i++;
-	}
-	return (1);
-}
-
 void	free_list(t_a *list, size_t length)
 {
 	size_t	i;
 	t_a		*temp;
 
 	i = 0;
+	if (!list)
+		return ;
 	while (i < length)
 	{
 		temp = list;
@@ -138,33 +127,77 @@ void	free_list(t_a *list, size_t length)
 	}
 }
 
+static int	check_tab(t_a *lst, size_t len)
+{
+	size_t	i;
+	size_t	j;
+	int		value;
+	t_a		*temp;
+
+	i = 0;
+	if (!lst)
+		return (0);
+	while (i < len)
+	{
+		value = lst->value;
+		// printf("\ncheck %d", value);
+		j = i + 1;
+		temp = lst->next;
+		while (j < len)
+		{
+			// printf(" %d", temp->value);
+			if (value == temp->value)
+				return (rprint("duplicate number"), free_list(lst, len), 0);
+			temp = temp->next;
+			j++;
+		}
+		lst = lst->next;
+		i++;
+	}
+	return (1);
+}
+
+int	find_smallest_int(t_a *list, size_t length)
+{
+	size_t	i;
+	int		tmp;
+
+	tmp = list->value;
+	list = list->next;
+	i = 0;
+	while (i++ < length)
+	{
+		printf("\n%d:%d\t%d\n", tmp, list->value, list->rank);
+		if (tmp > list->value && list->rank == -1)
+			printf("\n\t\t%d\n", tmp);
+		if (tmp > list->value && list->rank == -1)
+			tmp = list->value;
+		list = list->next;
+	}
+	printf("\n%d < ici temp\n", tmp);
+	return (tmp);
+}
+
 t_a	*check_rank(t_a *list, size_t length)
 {
-	int		tmp;
-	int		boolean;
 	size_t	i;
-	int		j;
+	size_t	j;
+	int		tmp;
 	t_a		*start;
 
 	start = list;
-	boolean = list->rank;
-	tmp = list->value;
-	j = 0;
-	while (++boolean == 0)
+	i = 0;
+	while (i < length)
 	{
-		i = -1;
-		while (++i < length)
+		tmp = find_smallest_int(list, length);
+		j = 0;
+		while (j < length)
 		{
-			if (tmp > list->value)
-				tmp = list->value;
-			list = list->next;
-		}
-		i = -1;
-		while (++i < length)
 			if (tmp == list->value)
-				list->rank = j;
-		boolean = -1;
-		j++;
+				list->value = i++;
+			list = list->next;
+			j++;
+		}
 	}
 	return (start);
 }
@@ -177,31 +210,31 @@ int	main(int argc, char *argv[])
 	size_t	list_length;
 
 	if (argc == 1)
-		return (err_print("too few arguments"), 0);
+		return (rprint("too few arguments"), 0);
 	tmp = ft_jointab(&argv[1], 0, 0);
 	if (!tmp)
 		return (0);
 	str = ft_strtrim(tmp, " ");
 	list_length = ft_count_words(str, 32);
-	// printf("\n|%s|\n|%s|\n|%zu|\n", str, tmp, list_length);
+	printf("\n|%s|\n|%s|\n|%zu|\n", str, tmp, list_length);
 	list = define_a(str, list_length);
 	if (!check_tab(list, list_length))
-		return (free(tmp), free(str), free_list(list, list_length), 0);
-	list = check_rank(list, list_length);
+		return (free(tmp), free(str), 0);
 	lprint(list);
+	list = check_rank(list, list_length);
 	free_list(list, list_length);
 	return (free(tmp), free(str), 0);
 }
 
-void	err_print(char *str)
+void	rprint(char *str)
 {
 	write(2, "Error : ", 9);
 	write(2, str, ft_strlen(str));
 	write(2, "\n", 1);
 }
-// ne pas oublier de retirer cette ligne dans le err_print
+// ne pas oublier de retirer cette ligne dans le rprint
 //
-//
+// modifier exit si argc == 1
 //
 // j'ai fait une partie du parsing, les entrees sont stockees dans
 // un tableau de chars, maintenant il faut le verifier et le split
@@ -221,3 +254,5 @@ void	err_print(char *str)
 //
 //
 // note du dimanche 10/12/23, verifier les duplicatas de nombres bisou
+//
+// proteger les mallocs de define_a

@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 14:56:44 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/12 10:56:22 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/12 17:31:15 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <limits.h>
 # include "../libft/libft.h"
 
 typedef struct s_a
@@ -26,7 +27,7 @@ typedef struct s_a
 }	t_a;
 
 char	*ft_jointab(char **tab, size_t i, int length);
-void	err_print(char *str);
+void	rprint(char *str);
 t_a		*swap_elements(t_a *list, size_t length);
 
 #endif
