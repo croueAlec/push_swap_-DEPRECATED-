@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 13:36:26 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/12 11:13:27 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/12 11:45:41 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,17 +148,22 @@ t_a	*check_rank(t_a *list, size_t length)
 
 	start = list;
 	boolean = list->rank;
+	tmp = list->value;
 	j = 0;
-	while (boolean == -1)
+	while (++boolean == 0)
 	{
 		i = -1;
 		while (++i < length)
+		{
 			if (tmp > list->value)
 				tmp = list->value;
+			list = list->next;
+		}
 		i = -1;
 		while (++i < length)
 			if (tmp == list->value)
 				list->rank = j;
+		boolean = -1;
 		j++;
 	}
 	return (start);
