@@ -6,7 +6,7 @@
 #    By: acroue <acroue@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/11 11:51:52 by acroue            #+#    #+#              #
-#    Updated: 2023/12/14 09:21:07 by acroue           ###   ########.fr        #
+#    Updated: 2023/12/14 13:28:09 by acroue           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,10 @@ fclean: clean
 	@${RM} ${NAME}
 
 re: fclean all
+
+cre:
+	@clear
+	@make re --no-print-directory
 
 norm:
 	@norminette $(SRC_DIR) | awk '/'Error'/ {print; found=1} END {if (!found) print "$(PURPLE)Norm O.K.$(DEFAULT)"}'

@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 13:36:26 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/14 10:34:33 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/14 15:20:36 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,16 @@ void	free_list(t_a *list, size_t length)
 	i = 0;
 	if (!list)
 		return ;
+	printf("\nfree");
 	while (i < length)
 	{
 		temp = list;
-		printf("\n\t\t%d\n", list->value);
+		printf(", %d", list->value);
 		list = list->next;
 		free(temp);
 		i++;
 	}
+	printf("\n");
 }
 
 t_a	*add_back(t_a **list, t_a **end)
@@ -110,8 +112,8 @@ t_a	*define_a(char *str, size_t length)
 		node->value = ln;
 		str += move_index(str, ln);
 	}
-	lprint(head);
-	return (node);
+	// lprint(head);
+	return (head);
 }
 
 void	lprint(t_a *list)
@@ -140,15 +142,15 @@ static int	check_tab(t_a *lst, size_t len)
 	i = 0;
 	if (!lst)
 		return (0);
-	while (i < len)
+	while (i < len - 1) // retirer le - 1 si probleme de check
 	{
 		value = lst->value;
-		printf("\ncheck %d", value);
+		// printf("\ncheck %d :", value);
 		j = i + 1;
 		temp = lst->next;
 		while (j < len)
 		{
-			printf(" %d", temp->value);
+			// printf(" %d", temp->value);
 			if (value == temp->value)
 				return (rprint("duplicate number"), free_list(lst, len), 0);
 			temp = temp->next;
@@ -170,14 +172,14 @@ int	find_smallest_int(t_a *list, size_t length)
 	i = 0;
 	while (i++ < length)
 	{
-		printf("\n%d:%d\t%d\n", tmp, list->value, list->rank);
-		if (tmp > list->value && list->rank == -1)
-			printf("\n\t\t%d\n", tmp);
+		// printf("\n%d:%d\t%d\n", tmp, list->value, list->rank);
+		// if (tmp > list->value && list->rank == -1)
+			// printf("\n\t\t%d\n", tmp);
 		if (tmp > list->value && list->rank == -1)
 			tmp = list->value;
 		list = list->next;
 	}
-	printf("\n%d < ici temp\n", tmp);
+	// printf("\n%d < ici temp\n", tmp);
 	return (tmp);
 }
 
@@ -197,12 +199,45 @@ t_a	*check_rank(t_a *list, size_t length)
 		while (j < length)
 		{
 			if (tmp == list->value)
-				list->value = i++;
+			{
+				// printf("rank %d\n", tmp);
+				list->rank = ++i;
+			}
 			list = list->next;
 			j++;
 		}
 	}
 	return (start);
+}
+
+t_a	*push(t_a *src, t_a *dest)
+{
+	
+}
+
+t_a	*move_b(t_a *list, size_t length)
+{
+	size_t	i;
+
+	i = 0;
+	while ((length - i) > 3 && i < (length / 2))
+	{
+		if (list->rank < (length / 2))
+		{
+			//push vers b
+			i++;
+		}
+		else
+		{
+			list = list->next; // faire RA
+		}
+	}
+	while (i < length)
+	{
+		//push vers b
+		i++;
+	}
+	return (NULL);
 }
 
 int	main(int argc, char *argv[])
@@ -219,12 +254,12 @@ int	main(int argc, char *argv[])
 		return (0);
 	str = ft_strtrim(tmp, " ");
 	list_length = ft_count_words(str, 32);
-	printf("\n|%s|\n|%s|\n|%zu|\n", str, tmp, list_length);
+	// printf("\n|%s|\n|%s|\n|%zu|\n", str, tmp, list_length);
 	list = define_a(str, list_length);
 	if (!check_tab(list, list_length))
 		return (free(tmp), free(str), 0);
+	move_b(check_rank(list, list_length), list_length);
 	lprint(list);
-	list = check_rank(list, list_length);
 	free_list(list, list_length);
 	return (free(tmp), free(str), 0);
 }
