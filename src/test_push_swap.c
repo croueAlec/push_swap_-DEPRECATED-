@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 13:36:26 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/14 15:20:36 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/14 17:05:57 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,12 +210,26 @@ t_a	*check_rank(t_a *list, size_t length)
 	return (start);
 }
 
-t_a	*push(t_a *src, t_a *dest)
+t_a	*push(t_a *src, t_a *dest, char c)
 {
 	
-}
+	ft_printf("s%c\n", c);
+	src->previous->next = src->next;
+	src->next->previous = src->previous;
+	if (!dest)
+	{
+		src->next = src;
+		src->previous = src;
+		return (src);
+	}
+	src->next = dest;
+	src->previous = dest->previous;
+	dest->previous->next = src;
+	dest->previous = src;
+	return (src);
+} // gerer le cas de vider le stack b
 
-t_a	*move_b(t_a *list, size_t length)
+t_a	*move_b(t_a *list, t_a *b,size_t length)
 {
 	size_t	i;
 
@@ -224,7 +238,8 @@ t_a	*move_b(t_a *list, size_t length)
 	{
 		if (list->rank < (length / 2))
 		{
-			//push vers b
+			list = list->next;
+			b = push(list->previous, b, "b");
 			i++;
 		}
 		else
@@ -234,10 +249,11 @@ t_a	*move_b(t_a *list, size_t length)
 	}
 	while (i < length)
 	{
-		//push vers b
+		list = list->next;
+		b = push(list->previous, b, "b");
 		i++;
 	}
-	return (NULL);
+	return (b);
 }
 
 int	main(int argc, char *argv[])
@@ -245,6 +261,7 @@ int	main(int argc, char *argv[])
 	char	*str;
 	char	*tmp;
 	t_a		*list;
+	t_a		*b;
 	size_t	list_length;
 
 	if (argc == 1)
@@ -258,7 +275,7 @@ int	main(int argc, char *argv[])
 	list = define_a(str, list_length);
 	if (!check_tab(list, list_length))
 		return (free(tmp), free(str), 0);
-	move_b(check_rank(list, list_length), list_length);
+	move_b(check_rank(list, list_length), b, list_length);
 	lprint(list);
 	free_list(list, list_length);
 	return (free(tmp), free(str), 0);
