@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 13:36:26 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/12 17:59:10 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/14 10:34:33 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,58 +39,79 @@ static size_t	move_index(char *str, long ln)
 	return (i);
 }
 
-static t_a	*def_next(t_a *node)
+void	free_list(t_a *list, size_t length)
 {
-	t_a	*next_node;
+	size_t	i;
+	t_a		*temp;
 
-	next_node = malloc(sizeof(t_a));
-	next_node->previous = node;
-	next_node->next = NULL;
-	return (next_node);
+	i = 0;
+	if (!list)
+		return ;
+	while (i < length)
+	{
+		temp = list;
+		printf("\n\t\t%d\n", list->value);
+		list = list->next;
+		free(temp);
+		i++;
+	}
 }
 
-void	fr(t_a *list)
+t_a	*add_back(t_a **list, t_a **end)
 {
-	t_a	*next;
+	t_a	*node;
+	t_a	*last;
 
-	next = list->next;
-	while (list->next)
-	{
-		next = list->next;
-		free(list);
-		printf("a");
-		list = next->next;
-	}
-	free(list);
+	node = malloc(sizeof(t_a));
+	if (!node)
+		return (NULL);
+	last = (*list)->previous;
+	node->next = (*list);
+	node->previous = last;
+	last->next = node;
+	(*list)->previous = node;
+	node->rank = -1;
+	*end = node;
+	return (node);
+}
+
+t_a	*def_first(void)
+{
+	t_a	*node;
+
+	node = malloc(sizeof(t_a));
+	if (!node)
+		return (NULL);
+	node->previous = node;
+	node->next = node;
+	node->rank = -1;
+	return (node);
 }
 
 t_a	*define_a(char *str, size_t length)
 {
 	long	ln;
 	t_a		*node;
-	t_a		*frst;
-	t_a		*next_node;
+	t_a		*head;
+	size_t	i;
 
-	node = malloc(sizeof(t_a));
-	frst = node;
-	node->previous = NULL;
-	while (*str)
+	i = 0;
+	node = def_first();
+	if (!node)
+		return (rprint("malloc failed"), NULL);
+	head = node;
+	while (i++ < length)
 	{
-		next_node = def_next(node);
-		node->next = next_node;
 		ln = ft_atol(str);
 		if (!(ln <= INT_MAX && ln >= INT_MIN))
-			return (rprint("invalid number"), fr(frst), NULL); // check le free partiel
-		str += move_index(str, ln);
+			return (rprint("invalid number"), free_list(head, i), NULL);
+		if (i > 1 && !add_back(&head, &node))
+			return (free_list(head, i), NULL);
 		node->value = ln;
-		node->rank = -1;
-		if (*str != '\0')
-			node = next_node;
+		str += move_index(str, ln);
 	}
-	if (length == 1)
-		node->next = node;
-	frst->previous = node;
-	return (free(next_node), node->next = frst);
+	lprint(head);
+	return (node);
 }
 
 void	lprint(t_a *list)
@@ -109,24 +130,6 @@ void	lprint(t_a *list)
 	// free(list);
 }
 
-void	free_list(t_a *list, size_t length)
-{
-	size_t	i;
-	t_a		*temp;
-
-	i = 0;
-	if (!list)
-		return ;
-	while (i < length)
-	{
-		temp = list;
-		// printf("\n\t\t%d\n", list->value);
-		list = list->next;
-		free(temp);
-		i++;
-	}
-}
-
 static int	check_tab(t_a *lst, size_t len)
 {
 	size_t	i;
@@ -140,12 +143,12 @@ static int	check_tab(t_a *lst, size_t len)
 	while (i < len)
 	{
 		value = lst->value;
-		// printf("\ncheck %d", value);
+		printf("\ncheck %d", value);
 		j = i + 1;
 		temp = lst->next;
 		while (j < len)
 		{
-			// printf(" %d", temp->value);
+			printf(" %d", temp->value);
 			if (value == temp->value)
 				return (rprint("duplicate number"), free_list(lst, len), 0);
 			temp = temp->next;
