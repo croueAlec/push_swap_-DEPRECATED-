@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 13:36:26 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/14 19:46:43 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/14 20:44:02 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,27 +113,27 @@ void	rprint(char *str)
 	write(2, str, ft_strlen(str));
 	write(2, "\n", 1);
 }
-/* ne pas oublier de retirer cette ligne dans le rprint
+/*	ne pas oublier de retirer cette ligne dans le rprint
 
-modifier exit si argc == 1
+	modifier exit si argc == 1
 
-j'ai fait une partie du parsing, les entrees sont stockees dans
-un tableau de chars, maintenant il faut le verifier et le split
+	j'ai fait une partie du parsing, les entrees sont stockees dans
+	un tableau de chars, maintenant il faut le verifier et le split
 
-verifier si les chars ne sont pas de 0-9 ou "-+ " verifier qu'un
-moins ou un plus est bien suivi d'un nombre
-
-
-au dessus c'est fait maintenant il faut separer dans une list chainee
+	verifier si les chars ne sont pas de 0-9 ou "-+ " verifier qu'un
+	moins ou un plus est bien suivi d'un nombre
 
 
+	au dessus c'est fait maintenant il faut separer dans une list chainee
 
+	note du vendredi 8/12/23, le parsing est fait mes inputs sont safes
 
+	note du dimanche 10/12/23, verifier les duplicatas de nombres bisou
 
-note du vendredi 8/12/23, le parsing est fait mes inputs sont safes
+	proteger les mallocs de define_a
 
+il faut verifier que tout se fait bien push dans B puis a nouveau dans A,
+qu'il n'y a pas de probleme avec B quand on le vide
 
-
-note du dimanche 10/12/23, verifier les duplicatas de nombres bisou
-
-proteger les mallocs de define_a */
+faire l'algo de tri
+*/
