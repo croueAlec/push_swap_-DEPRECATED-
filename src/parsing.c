@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 17:03:44 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/12 17:31:38 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/14 20:07:30 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,3 +56,10 @@ char	*ft_jointab(char **tab, size_t i, int length)
 	}
 	return (joined);
 }
+
+/* 
+	Here we parse the values we get as main arguments.
+	They joined and then trimmed to be interpreted by the tab_manager.
+
+	Duplicates check is done using check_tab
+ */

@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 00:47:00 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/12 07:12:38 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/14 19:49:42 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 t_a	*swap_elements(t_a *list, size_t length)
 {
 	int	tmp;
+
 	write(1, "sa\n", 3);
 	if (length == 1)
 		return (list);
@@ -30,10 +31,60 @@ t_a	*swap_elements(t_a *list, size_t length)
 	// temp->next = list;
 	// printf("\n:%d %d:\n", list->value, temp->value);
 	// return (temp);
-
 	printf("\n%d %d\n", list->value, list->next->value);
 	tmp = list->value;
 	list->value = list->next->value;
 	list->next->value = tmp;
 	return (list);
 }
+
+t_a	*push(t_a *src, t_a *dest, char c)
+{
+	ft_printf("s%c\n", c);
+	src->previous->next = src->next;
+	src->next->previous = src->previous;
+	if (!dest)
+	{
+		src->next = src;
+		src->previous = src;
+		return (src);
+	}
+	src->next = dest;
+	src->previous = dest->previous;
+	dest->previous->next = src;
+	dest->previous = src;
+	return (src);
+}
+/* gerer le cas de vider le stack b */
+
+t_a	*move_b(t_a *list, t_a *b, size_t length)
+{
+	size_t	i;
+
+	i = 0;
+	while ((length - i) > 3 && i < (length / 2))
+	{
+		if ((size_t)list->rank < (length / 2))
+		{
+			list = list->next;
+			b = push(list->previous, b, 'b');
+			i++;
+		}
+		else
+		{
+			list = list->next; // faire RA
+		}
+	}
+	while (i < length)
+	{
+		list = list->next;
+		b = push(list->previous, b, 'b');
+		i++;
+	}
+	return (b);
+}
+
+/* 
+	Here we have the functions that are going to allow us to push and
+	you guessed it... swap elements in our linked list.
+ */
