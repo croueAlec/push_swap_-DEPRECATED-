@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 19:35:51 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/14 20:06:32 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/15 14:21:04 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ static int	find_smallest_int(t_a *list, size_t length)
 	size_t	i;
 	int		tmp;
 
+	i = -1;
+	while (++i < length && list->rank != -1)
+		list = list->next;
 	tmp = list->value;
-	list = list->next;
-	i = 0;
-	while (i++ < length)
+	i = -1;
+	while (++i < length)
 	{
 		// printf("\n%d:%d\t%d\n", tmp, list->value, list->rank);
 		// if (tmp > list->value && list->rank == -1)
