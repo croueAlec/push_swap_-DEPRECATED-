@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 00:47:00 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/14 19:49:42 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/15 15:27:53 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,9 @@ t_a	*move_b(t_a *list, t_a *b, size_t length)
 	size_t	i;
 
 	i = 0;
-	while ((length - i) > 3 && i < (length / 2))
+	while (((length / 2) - i) > 3 && i < (length / 2))
 	{
+		printf("length/2 - i: %zu\nrank: %d median: %zu\n", (length/2)-i, list->rank, (length / 2));
 		if ((size_t)list->rank < (length / 2))
 		{
 			list = list->next;
