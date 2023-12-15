@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 19:33:37 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/14 20:08:13 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/15 14:07:24 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include <stdio.h>
 
-static int	num_len(long n)
+static size_t	num_len(long n)
 {
 	size_t	length;
 
@@ -32,13 +32,19 @@ static int	num_len(long n)
 static size_t	move_index(char *str, long ln)
 {
 	size_t	i;
+	size_t	j;
 
-	i = num_len(ln);
+	i = 0;
+	j = 0;
 	while (str[i] != '\0' && str[i] == ' ')
-	{
 		i++;
-	}
-	return (i);
+	if (str[i] == '+' || str[i] == '-')
+		j++;
+	while (ft_isdigit(str[i + j]))
+		j++;
+	if (num_len(ln) != j)
+		return (0);
+	return (i + j);
 }
 
 static t_a	*add_back(t_a **list, t_a **end)
@@ -78,6 +84,7 @@ t_a	*define_a(char *str, size_t length)
 	t_a		*node;
 	t_a		*head;
 	size_t	i;
+	size_t	index;
 
 	i = 0;
 	node = def_first();
@@ -87,12 +94,13 @@ t_a	*define_a(char *str, size_t length)
 	while (i++ < length)
 	{
 		ln = ft_atol(str);
-		if (!(ln <= INT_MAX && ln >= INT_MIN))
+		index = move_index(str, ln);
+		if (!(ln <= INT_MAX && ln >= INT_MIN) || index == 0)
 			return (rprint("invalid number"), free_list(head, i), NULL);
 		if (i > 1 && !add_back(&head, &node))
 			return (free_list(head, i), NULL);
 		node->value = ln;
-		str += move_index(str, ln);
+		str += index;
 	}
 	// lprint(head);
 	return (head);

@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 17:03:44 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/14 20:07:30 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/15 13:33:01 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,23 @@
 static int	ft_stringcheck(char *s)
 {
 	int	i;
+	int	boolean;
 
 	i = 0;
+	boolean = 0;
 	while (s[i] != '\0')
 	{
 		if (!ft_isdigit(s[i]) && s[i] != ' ' && s[i] != '-' && s[i] != '+')
 			return (0);
 		if (i > 0 && (s[i] == '+' || s[i] == '-') && s[i - 1] != ' ')
 			return (0);
+		if ((s[i] == '+' || s[i] == '-') && !ft_isdigit(s[i + 1]))
+			return (0);
+		if (ft_isdigit(s[i]))
+			boolean = 1;
 		i++;
 	}
-	return (i);
+	return (i * boolean);
 }
 
 char	*ft_jointab(char **tab, size_t i, int length)
