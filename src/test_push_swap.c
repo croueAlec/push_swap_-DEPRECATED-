@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 13:36:26 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/15 15:30:45 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/18 13:48:30 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ void	lprint(t_a *list)
 {
 	int		temp;
 
+	if (!list)
+	{
+		printf("\nempty list\n");
+		return ;
+	}
 	temp = list->value;
 	printf("\n%d (%d)", temp, list->rank);
 	list = list->next;
