@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 00:47:00 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/18 14:08:56 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/18 14:59:19 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,22 +65,32 @@ void push(t_a **src, t_a **dest, char c)
 	(*dest) = tmp;
 }
 
-void	rotate(t_a **a, t_a **b, char c)
+void	rotate(t_a **a, t_a **b, char *str)
 {
 	t_a	**tmp;
 
-	if (c == 'a' || c == 'A')
-		(*tmp) = (*a);
-	else if (c == 'b' || c == 'B')
-		(*tmp) = (*b);
-	if (c == 'a' || c == 'b')
+	if (str[0] == 'a' || (str[0] == 'r' && str[1] == 'a'))
+		tmp = a;
+	else if (str[0] == 'b' || (str[0] == 'r' && str[1] == 'b'))
+		tmp = b;
+	if (str[0] == 'a' || str[0] == 'b')
 		(*tmp) = (*tmp)->next;
-	if (c == 'A' || c == 'B')
+	if (str[0] == 'r' && (str[1] == 'a' || str[1] == 'b'))
 		(*tmp) = (*tmp)->previous;
-	
-} // finir rotate
+	if (str[0] == 'r' && str[1] == '\0')
+	{
+		(*a) = (*a)->next;
+		(*b) = (*b)->next;
+	}
+	if (str[0] == 'r' && str[1] == 'r' && str[2] == '\0')
+	{
+		(*a) = (*a)->previous;
+		(*b) = (*b)->previous;
+	}
+	ft_printf("r%s\n", str);
+}
 
-void move_b(t_a **list, t_a **b, size_t length)
+size_t	move_b(t_a **list, t_a **b, size_t length)
 {
 	size_t	i;
 
@@ -105,7 +115,7 @@ void move_b(t_a **list, t_a **b, size_t length)
 		push(list, b, 'b');
 		i++;
 	}
-	return ;
+	return (i);
 }
 
 /* 
