@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 00:47:00 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/18 14:59:19 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/18 16:24:43 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include <stdio.h>
 
-t_a	*swap_elements(t_a *list, size_t length, char c)
+t_a	* swap_elements(t_a *list, size_t length, char c)
 {
 	int	tmp;
 

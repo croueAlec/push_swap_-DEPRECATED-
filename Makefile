@@ -6,7 +6,7 @@
 #    By: acroue <acroue@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/11 11:51:52 by acroue            #+#    #+#              #
-#    Updated: 2023/12/15 15:10:24 by acroue           ###   ########.fr        #
+#    Updated: 2023/12/18 15:54:43 by acroue           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Wextra -Werror -g
 RM = rm -rf
 INCLUDE = include/
 SRC_DIR = src
-SRC = ${addprefix ${SRC_DIR}/, check_rank.c parsing.c swap_functions.c tab_manager.c test_push_swap.c}
+SRC = ${addprefix ${SRC_DIR}/, check_rank.c parsing.c swap_functions.c tab_manager.c test_push_swap.c sorting.c}
 OBJ_DIR = obj
 OBJ = ${addprefix ${OBJ_DIR}/, ${SRC:.c=.o}}
 LIB_DIR = libft
@@ -67,6 +67,9 @@ norm:
 
 x: cre
 	@./push_swap "30 60 50 -10 90 80 40 100 20 70"
+
+valerie: cre
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./push_swap "30 60 50 -10 90 80 40 100 20 70"
 
 gx: cre
 	@gdb --args ./push_swap "30 60 50 -10 90 80 40 100 20 70"

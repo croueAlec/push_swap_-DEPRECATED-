@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 13:36:26 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/18 15:02:56 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/18 16:00:26 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,13 @@ int	main(int argc, char *argv[])
 		return (free(tmp), free(str), 0);
 	list = check_rank(list, list_length);
 	n = move_b(&list, &b, list_length);
+	lprint(list);
+	printf("\nB [\n");
+	lprint(b);
+	printf("\n]\n");
+	// rotate(&list, &b, "a");
+	// rotate(&list, &b, "b");
+	sort_three(&list, list_length - n);
 	lprint(list);
 	printf("\nB [\n");
 	lprint(b);
