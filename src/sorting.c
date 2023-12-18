@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 15:16:19 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/18 17:06:11 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/18 18:32:52 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,20 @@ void	sort_three(t_a **list, size_t length)
 	while (!is_list_sorted((*list)))
 	{
 		if (!is_node_sorted((*list), (*list)->next))
-			swap_elements((*list), length, 'a');
+			(*list) = swap_elements((*list), length, 'a');
 		else
 			rotate(list, NULL, "ra");
+	}
+}
+
+void	sorting(t_a **list, t_a **b, size_t length)
+{
+	while (length)
+	{
+		if ((*b)->rank < (*list)->rank)
+			push(b, list, 'a');
+		else
+			rotate(list, NULL, "a");
+		length--;
 	}
 }

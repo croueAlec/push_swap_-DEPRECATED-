@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 13:36:26 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/18 16:00:26 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/18 18:27:56 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	lprint(t_a *list)
 		list = list->next;
 		// free(list->previous);
 	}
+	printf("\n");
 	// free(list);
 }
 
@@ -107,6 +108,8 @@ int	main(int argc, char *argv[])
 	if (!check_tab(list, list_length))
 		return (free(tmp), free(str), 0);
 	list = check_rank(list, list_length);
+	lprint(list);
+	printf("\n\n");
 	n = move_b(&list, &b, list_length);
 	lprint(list);
 	printf("\nB [\n");
@@ -115,6 +118,7 @@ int	main(int argc, char *argv[])
 	// rotate(&list, &b, "a");
 	// rotate(&list, &b, "b");
 	sort_three(&list, list_length - n);
+	// sorting(&list, &b, n);
 	lprint(list);
 	printf("\nB [\n");
 	lprint(b);

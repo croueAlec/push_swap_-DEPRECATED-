@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 00:47:00 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/18 17:08:15 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/18 18:32:46 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,19 +88,16 @@ size_t	move_b(t_a **list, t_a **b, size_t length)
 	{
 		if ((size_t)(*list)->rank < (length / 2))
 		{
-			printf("\n%d vers b en bas\n", (*list)->value);
 			push(list, b, 'b');
 			i++;
 		}
 		else
 		{
-			(*list) = (*list)->next;
-			printf("ra\n");
+			rotate(list, NULL, "a");
 		}
 	}
 	while (i < length - 3)
 	{
-		printf("\n%d vers b en haut\n", (*list)->value);
 		push(list, b, 'b');
 		i++;
 	}
