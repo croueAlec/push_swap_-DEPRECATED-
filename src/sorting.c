@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 15:16:19 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/18 16:12:51 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/18 17:06:11 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	is_node_sorted(t_a *node, t_a *next)
 
 int	is_list_sorted(t_a *list)
 {
-	t_a	*tmp;
+	t_a		*tmp;
 	size_t	i;
 
 	i = 0;

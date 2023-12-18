@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 00:47:00 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/18 16:24:43 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/18 17:08:15 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,24 @@
 
 #include <stdio.h>
 
-t_a	* swap_elements(t_a *list, size_t length, char c)
+t_a	*swap_elements(t_a *list, size_t length, char c)
 {
-	int	tmp;
+	t_a	*tmp;
 
-	ft_printf("s%c\n", c);
 	if (length == 1)
 		return (list);
-	// t_a	*temp;
-	// temp = list->next;
-	// printf("\n:%d %d:\n", list->value, temp->value);
-	// list->previous->next = temp;
-	// temp->previous = list->previous;
-	// list->previous = temp;
-	// temp = temp->next;
-	// temp->next = list;
-	// printf("\n:%d %d:\n", list->value, temp->value);
-	// return (temp);
-	printf("\n%d %d\n", list->value, list->next->value);
-	printf("\n%d %d\n", list->rank, list->next->rank);
-	tmp = list->value;
-	list->value = list->next->value;
-	list->next->value = tmp;
-	tmp = list->rank;
-	list->rank = list->next->rank;
-	list->next->rank = tmp;
-	return (list);
+	printf("s%c\n", c);
+	tmp = list->next;
+	list->previous->next = tmp;
+	tmp->next->previous = list;
+	list->next = tmp->next;
+	tmp->next = list;
+	tmp->previous = list->previous;
+	list->previous = tmp;
+	return (tmp);
 }
 
-void push(t_a **src, t_a **dest, char c)
+void	push(t_a **src, t_a **dest, char c)
 {
 	t_a	*tmp;
 
@@ -122,6 +111,34 @@ size_t	move_b(t_a **list, t_a **b, size_t length)
 	Here we have the functions that are going to allow us to push and
 	you guessed it... swap elements in our linked list.
  */
+
+/* t_a	*swap_elements(t_a *list, size_t length, char c)
+{
+	int	tmp;
+
+	ft_printf("s%c\n", c);
+	if (length == 1)
+		return (list);
+	// t_a	*temp;
+	// temp = list->next;
+	// printf("\n:%d %d:\n", list->value, temp->value);
+	// list->previous->next = temp;
+	// temp->previous = list->previous;
+	// list->previous = temp;
+	// temp = temp->next;
+	// temp->next = list;
+	// printf("\n:%d %d:\n", list->value, temp->value);
+	// return (temp);
+	printf("\n%d %d\n", list->value, list->next->value);
+	printf("\n%d %d\n", list->rank, list->next->rank);
+	tmp = list->value;
+	list->value = list->next->value;
+	list->next->value = tmp;
+	tmp = list->rank;
+	list->rank = list->next->rank;
+	list->next->rank = tmp;
+	return (list);
+} */
 
 /* t_a	*push(t_a *src, t_a *dest, char c)
 {

@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 19:33:37 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/18 15:02:10 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/18 17:06:26 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ t_a	*define_a(char *str, size_t length)
 		node->value = ln;
 		str += index;
 	}
-	// lprint(head);
 	return (head);
 }
 
