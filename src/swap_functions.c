@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 00:47:00 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/15 15:27:53 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/18 11:01:38 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 #include <stdio.h>
 
-t_a	*swap_elements(t_a *list, size_t length)
+t_a	*swap_elements(t_a *list, size_t length, char c)
 {
 	int	tmp;
 
-	write(1, "sa\n", 3);
+	ft_printf("s%c\n", c);
 	if (length == 1)
 		return (list);
 	// t_a	*temp;
@@ -32,9 +32,13 @@ t_a	*swap_elements(t_a *list, size_t length)
 	// printf("\n:%d %d:\n", list->value, temp->value);
 	// return (temp);
 	printf("\n%d %d\n", list->value, list->next->value);
+	printf("\n%d %d\n", list->rank, list->next->rank);
 	tmp = list->value;
 	list->value = list->next->value;
 	list->next->value = tmp;
+	tmp = list->rank;
+	list->rank = list->next->rank;
+	list->next->rank = tmp;
 	return (list);
 }
 

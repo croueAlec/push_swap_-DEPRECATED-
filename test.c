@@ -14,17 +14,23 @@ typedef struct s_a
 
 t_a	*push(t_a *src, t_a *dest, char c)
 {
+	t_a	*prev;
+
+	prev = src->previous;
+	printf("\n\t\t\t\t%d %d\n", src->value, src->next->value);
 	printf("s%c\n", c);
-	src->previous->next = src->next;
-	src->next->previous = src->previous;
+	printf("\n==%p==\n%d %d\n==%p==\n", prev->previous, prev->value, prev->rank, prev->next);
+	prev->next = src->next;
+	printf("==%p==\n%d %d\n==%p==\n\n", prev->previous, prev->value, prev->rank, prev->next);
+	src->next->previous = prev;
 	if (!dest)
 	{
 		src->next = src;
-		src->previous = src;
+		prev = src;
 		return (src);
 	}
 	src->next = dest;
-	src->previous = dest->previous;
+	prev = dest->previous;
 	dest->previous->next = src;
 	dest->previous = src;
 	return (src);
@@ -41,13 +47,16 @@ t_a	*move_b(t_a *list, t_a *b, size_t length)
 		printf("\nmedian - i: %zu\nrank: %d median: %zu\n", (length/2)-i, list->rank, (length / 2));
 		if ((size_t)list->rank < (length / 2))
 		{
+			printf("\n\t\t\t%d\n", list->value);
 			list = list->next;
+			printf("\n\t\t\t%d\n", list->value);
 			b = push(list->previous, b, 'b');
 			i++;
 		}
 		else
 		{
 			list = list->next; // faire RA
+			printf("ra\n");
 		}
 	}
 	while (i < length)
@@ -135,6 +144,7 @@ int	main(int argc, char *argv[])
 	tmp->next = first;
 	first->previous = tmp;
 	lprint(first);
-	move_b(first ,b , 10);
+	b = move_b(first ,b , 10);
+	lprint(b);
 	return (0);
 }
