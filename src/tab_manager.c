@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 19:33:37 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/19 13:46:58 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/19 17:09:58 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static t_a	*add_back(t_a **list, t_a **end)
 	last->next = node;
 	(*list)->previous = node;
 	node->rank = -1;
+	zero_cost(node);
 	*end = node;
 	return (node);
 }
@@ -75,6 +76,7 @@ static t_a	*def_first(void)
 	node->previous = node;
 	node->next = node;
 	node->rank = -1;
+	zero_cost(node);
 	return (node);
 }
 
