@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 13:36:26 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/18 18:27:56 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/19 13:59:26 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,25 @@
 
 #include <stdio.h>
 
-void	free_list(t_a *list, size_t length)
+void	free_list(t_a *list)
 {
-	size_t	i;
-	t_a		*temp;
+	t_a	*temp;
+	t_a	*next;
 
-	i = 0;
 	if (!list)
 		return ;
+	temp = list;
 	printf("\nfree");
-	while (i < length)
+	list = list->next;
+	while (list != temp)
 	{
-		temp = list;
 		printf(", %d", list->value);
-		list = list->next;
-		free(temp);
-		i++;
+		next = list->next;
+		free(list);
+		list = next;
 	}
+	printf(", %d", list->value);
+	free(list);
 	printf("\n");
 }
 
@@ -76,7 +78,7 @@ static int	check_tab(t_a *lst, size_t len)
 		{
 			// printf(" %d", temp->value);
 			if (value == temp->value)
-				return (rprint("duplicate number"), free_list(lst, len), 0);
+				return (rprint("duplicate number"), free_list(lst), 0);
 			temp = temp->next;
 			j++;
 		}
@@ -118,13 +120,13 @@ int	main(int argc, char *argv[])
 	// rotate(&list, &b, "a");
 	// rotate(&list, &b, "b");
 	sort_three(&list, list_length - n);
-	// sorting(&list, &b, n);
+	sorting(&list, &b, n);
 	lprint(list);
 	printf("\nB [\n");
 	lprint(b);
 	printf("\n]\n");
-	free_list(list, list_length - n);
-	free_list(b, n);
+	free_list(list);
+	free_list(b);
 	return (free(tmp), free(str), 0);
 }
 
