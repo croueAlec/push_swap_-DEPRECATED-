@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 13:36:26 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/19 13:59:26 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/19 15:21:00 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,8 @@ void	lprint(t_a *list)
 	{
 		printf("\n%d (%d)", list->value, list->rank);
 		list = list->next;
-		// free(list->previous);
 	}
 	printf("\n");
-	// free(list);
 }
 
 static int	check_tab(t_a *lst, size_t len)
@@ -87,6 +85,23 @@ static int	check_tab(t_a *lst, size_t len)
 	}
 	return (1);
 }
+
+void	count_cost(t_a **b)
+{
+	t_a	*list;
+	t_a	*temp;
+
+	list = (*b);
+	temp = list->previous;
+	while (1)
+	{
+		if (list == temp)
+		{
+			break;
+		}
+	}
+	
+} // faire le count des couts + le temp
 
 int	main(int argc, char *argv[])
 {
@@ -120,7 +135,7 @@ int	main(int argc, char *argv[])
 	// rotate(&list, &b, "a");
 	// rotate(&list, &b, "b");
 	sort_three(&list, list_length - n);
-	sorting(&list, &b, n);
+	count_cost(&b);
 	lprint(list);
 	printf("\nB [\n");
 	lprint(b);

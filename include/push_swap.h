@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 14:56:44 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/19 13:46:18 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/19 14:56:35 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,20 @@
 
 typedef struct s_a
 {
-	int			value;
-	int			rank;
-	struct s_a	*next;
-	struct s_a	*previous;
+	int				value;
+	int				rank;
+	struct s_a		*next;
+	struct s_a		*previous;
+	struct s_cost	cost;
 }	t_a;
+
+typedef struct s_cost
+{
+	size_t		ra;
+	size_t		rb;
+	size_t		total;
+}	t_cost;
+
 
 t_a		*check_rank(t_a *list, size_t length);
 char	*ft_jointab(char **tab, size_t i, int length);
