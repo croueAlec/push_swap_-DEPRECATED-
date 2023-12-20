@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 14:56:44 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/20 12:59:17 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/20 13:48:41 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,6 @@
 # include <limits.h>
 # include "../libft/libft.h"
 
-typedef struct s_a
-{
-	int				value;
-	int				rank;
-	struct s_a		*next;
-	struct s_a		*previous;
-	struct s_cost	cost;
-}	t_a;
-
 typedef struct s_cost
 {
 	size_t		ra;
@@ -36,6 +27,15 @@ typedef struct s_cost
 	size_t		rr;
 	size_t		rrr;
 }	t_cost;
+
+typedef struct s_a
+{
+	int				value;
+	int				rank;
+	struct s_a		*next;
+	struct s_a		*previous;
+	struct s_cost	cost;
+}	t_a;
 
 
 t_a		*check_rank(t_a *list, size_t length);

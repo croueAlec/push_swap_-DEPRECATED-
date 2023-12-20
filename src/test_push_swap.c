@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 13:36:26 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/19 18:27:03 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/20 18:56:52 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@ void	free_list(t_a *list)
 
 	if (!list)
 		return ;
-	temp = list;
+	temp = list->previous;
 	printf("\nfree");
-	list = list->next;
 	while (list != temp)
 	{
 		printf(", %d", list->value);
@@ -31,8 +30,8 @@ void	free_list(t_a *list)
 		free(list);
 		list = next;
 	}
-	printf(", %d", list->value);
-	free(list);
+	printf(", %d", temp->value);
+	free(temp);
 	printf("\n");
 }
 
@@ -124,6 +123,7 @@ int	main(int argc, char *argv[])
 	lprint(b);
 	printf("\n]\n");
 	free_list(list);
+	printf("\npremier free%d\n", b->value);
 	free_list(b);
 	return (free(tmp), free(str), 0);
 }

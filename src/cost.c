@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 17:08:28 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/20 12:59:16 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/20 19:52:27 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	def_cost(t_a **list, t_a **b, size_t length, size_t index)
 {
 	size_t	i;
 
+	list = NULL;
+	printf("\n1");
 	i = 0;
 	(*b)->cost.rrb = length - index; // si on est plus proche de la fin alors move down
 	(*b)->cost.rb = index; // si + proche du debut alors move up
@@ -33,15 +35,17 @@ void	def_cost(t_a **list, t_a **b, size_t length, size_t index)
 
 void	sunk_cost(t_a **list, t_a **b, size_t len)
 {
-	t_a		*temp;
+	t_a		*tmp;
 	size_t	i;
 
 	i = 0;
-	temp = (*list);
-	while ((*b)->rank < temp->rank)
+	tmp = (*list);
+	printf("2");
+	while ((*b)->rank > tmp->rank)
 	{
+		printf("\n%d %d\n", (*b)->rank, tmp->rank);
 		i++;
-		temp = temp->next;
+		tmp = tmp->next;
 	}
 	(*b)->cost.rra = len - i;
 	(*b)->cost.ra = i;
@@ -50,6 +54,7 @@ void	sunk_cost(t_a **list, t_a **b, size_t len)
 
 void	justice(t_a **list, t_a **b, size_t up, size_t down)
 {
+	list = NULL;
 	if (up <= down)
 	{
 		(*b)->cost.rra = 0;
@@ -62,7 +67,6 @@ void	justice(t_a **list, t_a **b, size_t up, size_t down)
 		(*b)->cost.rrb = 0;
 		(*b)->cost.rrr = 0;
 	}
-	
 	// ICI verifier si le cout de up est sup a down et clear le mauvais
 }
 
@@ -71,6 +75,10 @@ void	compare_cost(t_a **list, t_a **b, size_t len)
 	size_t	up;
 	size_t	down;
 
+	len = 0;
+	up = 0;
+	down = 0;
+	printf("3 PREMIER = %d\n", (*b)->value);
 	while ((*b)->cost.ra > 0 && (*b)->cost.rb > 0)
 	{
 		(*b)->cost.ra--;
@@ -86,6 +94,7 @@ void	compare_cost(t_a **list, t_a **b, size_t len)
 	up += (*b)->cost.ra;
 	up += (*b)->cost.rb;
 	down += (*b)->cost.rra;
+	len = 0;
 	down += (*b)->cost.rrb;
 	justice(list, b, up, down);
 }
@@ -95,24 +104,55 @@ void	compare_cost(t_a **list, t_a **b, size_t len)
 // 	if ()
 // }
 
+void	pruc(t_a *list)
+{
+	t_a		*temp;
+
+	if (!list)
+	{
+		printf("\nempty list\n");
+		return ;
+	}
+	printf("\nPREMIER = %d\n", list->value);
+	temp = list;
+	printf("|val|ra |rb |rra|rrb|rr |rrr|");
+	printf("\n\n|%3d| %zu | %zu | %zu | %zu | %zu | %zu |", temp->value, temp->cost.ra, temp->cost.rb, temp->cost.rra, temp->cost.rrb, temp->cost.rr, temp->cost.rrr);
+	list = list->next;
+	while (list != temp)
+	{
+		printf("\n\n|%3d| %zu | %zu | %zu | %zu | %zu | %zu |", list->value, list->cost.ra, list->cost.rb, list->cost.rra, list->cost.rrb, list->cost.rr, list->cost.rrr);
+		list = list->next;
+	}
+	printf("\n");
+}
+
 void	count_cost(t_a **list, t_a **b, size_t len, size_t b_len)
 {
 	t_a		*temp;
 	size_t	i;
 
+	printf("\nPREMIER = %d\n", (*b)->value);
 	i = 0;
+	len = 0;
 	temp = (*b)->previous;
 	while (1)
 	{
 		if ((*b) == temp)
 		{
 			def_cost(list, b, b_len, i);
+			sunk_cost(list, b, len);
+			compare_cost(list, b, len);
+			(*b) = (*b)->next;
 			break;
 		}
 		def_cost(list, b, b_len, i);
+		sunk_cost(list, b, len);
+		compare_cost(list, b, len);
 		(*b) = (*b)->next;
 		i++;
 	}
+	pruc(temp->next);
+	// faire le check de tout les mouvements et les comparer
 } // faire le count des couts + le temp
 
 /* 
