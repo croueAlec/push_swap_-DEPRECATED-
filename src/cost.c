@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 17:08:28 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/19 18:26:28 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/20 12:59:16 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	zero_cost(t_a *node)
 	node->cost.rb = 0;
 	node->cost.rra = 0;
 	node->cost.rrb = 0;
-	node->cost.total = 0;
 }
 
 void	def_cost(t_a **list, t_a **b, size_t length, size_t index)
@@ -28,12 +27,8 @@ void	def_cost(t_a **list, t_a **b, size_t length, size_t index)
 	size_t	i;
 
 	i = 0;
-	if (index > (length / 2))
-		(*b)->cost.rrb = length - index; // si on est plus proche de la fin alors move down
-	else
-		(*b)->cost.rb = index; // si + proche du debut alors move up
-	(*b)->cost.total += (*b)->cost.rrb;
-	(*b)->cost.total += (*b)->cost.rb;
+	(*b)->cost.rrb = length - index; // si on est plus proche de la fin alors move down
+	(*b)->cost.rb = index; // si + proche du debut alors move up
 }
 
 void	sunk_cost(t_a **list, t_a **b, size_t len)
@@ -48,16 +43,57 @@ void	sunk_cost(t_a **list, t_a **b, size_t len)
 		i++;
 		temp = temp->next;
 	}
-	if (i > (len / 2))
-		(*b)->cost.rra = len - i;
-	else
-		(*b)->cost.ra = i;
-	(*b)->cost.total += (*b)->cost.rra;
-	(*b)->cost.total += (*b)->cost.ra;
-	
+	(*b)->cost.rra = len - i;
+	(*b)->cost.ra = i;
 	// ICI comparer rrb et rra puis rb et ra pour faire des rrr ou rr et -- sur les ra, rb, rra, rrb
-	
 } // ici on compte le cout de deplacer la node a sa place
+
+void	justice(t_a **list, t_a **b, size_t up, size_t down)
+{
+	if (up <= down)
+	{
+		(*b)->cost.rra = 0;
+		(*b)->cost.rrb = 0;
+		(*b)->cost.rrr = 0;
+	}
+	else
+	{
+		(*b)->cost.rra = 0;
+		(*b)->cost.rrb = 0;
+		(*b)->cost.rrr = 0;
+	}
+	
+	// ICI verifier si le cout de up est sup a down et clear le mauvais
+}
+
+void	compare_cost(t_a **list, t_a **b, size_t len)
+{
+	size_t	up;
+	size_t	down;
+
+	while ((*b)->cost.ra > 0 && (*b)->cost.rb > 0)
+	{
+		(*b)->cost.ra--;
+		(*b)->cost.rb--;
+		up = ++(*b)->cost.rr;
+	}
+	while ((*b)->cost.rra > 0 && (*b)->cost.rrb > 0)
+	{
+		(*b)->cost.rra--;
+		(*b)->cost.rrb--;
+		down = ++(*b)->cost.rrr;
+	}
+	up += (*b)->cost.ra;
+	up += (*b)->cost.rb;
+	down += (*b)->cost.rra;
+	down += (*b)->cost.rrb;
+	justice(list, b, up, down);
+}
+
+// void	truc_cost(t_a **list, t_a **b)
+// {
+// 	if ()
+// }
 
 void	count_cost(t_a **list, t_a **b, size_t len, size_t b_len)
 {
