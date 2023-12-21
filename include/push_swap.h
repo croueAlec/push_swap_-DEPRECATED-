@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 14:56:44 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/21 11:36:09 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/21 19:41:44 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_a
 	struct s_cost	cost;
 }	t_a;
 
-
+void	applied_energistics(t_a *list, t_a *b, size_t len, size_t b_len);
 t_a		*check_rank(t_a *list, size_t length);
 void	zero_cost(t_a *node);
 void	def_cost(t_a **list, t_a **b, size_t length, size_t index);

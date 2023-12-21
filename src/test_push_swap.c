@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 13:36:26 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/20 18:56:52 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/21 19:37:01 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,9 +122,14 @@ int	main(int argc, char *argv[])
 	printf("\nB [\n");
 	lprint(b);
 	printf("\n]\n");
+	applied_energistics(list, b, list_length, n);
+	lprint(list);
+	printf("\nB [\n");
+	lprint(b);
+	printf("\n]\n");
 	free_list(list);
-	printf("\npremier free%d\n", b->value);
-	free_list(b);
+	// printf("\npremier free%d\n", b->value);
+	// free_list(b);
 	return (free(tmp), free(str), 0);
 }
 
