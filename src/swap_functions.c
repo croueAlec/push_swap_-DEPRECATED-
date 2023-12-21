@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 00:47:00 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/18 18:32:46 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/21 17:12:39 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	rotate(t_a **a, t_a **b, char *str)
 {
 	t_a	**tmp;
 
+	tmp = NULL;
 	if (str[0] == 'a' || (str[0] == 'r' && str[1] == 'a'))
 		tmp = a;
 	else if (str[0] == 'b' || (str[0] == 'r' && str[1] == 'b'))
@@ -86,7 +87,7 @@ size_t	move_b(t_a **list, t_a **b, size_t length)
 	i = 0;
 	while (((length - i + 1) / 2) > 3 && i < (length / 2))
 	{
-		if ((size_t)(*list)->rank < (length / 2))
+		if ((size_t)(*list)->rank <= (length / 2))
 		{
 			push(list, b, 'b');
 			i++;
