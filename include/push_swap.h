@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 14:56:44 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/20 13:48:41 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/21 11:36:09 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_cost
 	size_t		rrb;
 	size_t		rr;
 	size_t		rrr;
+	size_t		total;
 }	t_cost;
 
 typedef struct s_a

@@ -6,7 +6,7 @@
 #    By: acroue <acroue@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/11 11:51:52 by acroue            #+#    #+#              #
-#    Updated: 2023/12/19 17:12:08 by acroue           ###   ########.fr        #
+#    Updated: 2023/12/21 12:03:35 by acroue           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,8 +68,14 @@ norm:
 x: cre
 	@./push_swap "30 60 50 -10 90 80 40 100 20 70"
 
+x2: cre
+	@./push_swap "20 30 40 -10 50 90 80 60 70 100"
+
 valerie: cre
 	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./push_swap "30 60 50 -10 90 80 40 100 20 70"
+
+valentin: cre
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./push_swap "20 30 40 -10 50 90 80 60 70 100"
 
 gx: cre
 	@gdb --args ./push_swap "30 60 50 -10 90 80 40 100 20 70"
