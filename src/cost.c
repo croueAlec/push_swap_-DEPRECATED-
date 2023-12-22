@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 17:08:28 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/21 19:59:10 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/22 19:05:14 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,23 +93,24 @@ void	compare_cost(t_a **list, t_a **b, size_t len)
 	up = 0;
 	down = 0;
 	len = 0;
-	// printf("3 PREMIER = %d\n", (*b)->value);
-	// printf("\n|val|ra |rb |rra|rrb|rr |rrr|tot|jjjjjjjjjjjjjjjjjjjjjjjjjjj");
-	// printf("\n|%3d| %zu | %zu | %zu | %zu | %zu | %zu | %zu |\n", (*b)->value, (*b)->cost.ra, (*b)->cost.rb, (*b)->cost.rra, (*b)->cost.rrb, (*b)->cost.rr, (*b)->cost.rrr, (*b)->cost.total);
+	printf("3 PREMIER = %d\n", (*b)->value);
+	printf("\n|val|ra |rb |rra|rrb|rr |rrr|tot|jjjjjjjjjjjjjjjjjjjjjjjjjjj");
+	printf("\n|%3d| %zu | %zu | %zu | %zu | %zu | %zu | %zu |\n", (*b)->value, (*b)->cost.ra, (*b)->cost.rb, (*b)->cost.rra, (*b)->cost.rrb, (*b)->cost.rr, (*b)->cost.rrr, (*b)->cost.total);
 	
 	if ((*b)->cost.rb == (*b)->cost.rra && (*b)->cost.rb == (*b)->cost.rrb)
 	{
 		(*b)->cost.rra = 0;
 		(*b)->cost.rrb = 0;
 	}
-	if ((*b)->cost.rra > (*b)->cost.ra + (*b)->cost.rrb)
+	if ((*b)->cost.rra > (*b)->cost.ra)
 		(*b)->cost.rra = 0; // JE NE SUIS PAS SUR DE CA
 	if ((*b)->cost.rrb > (*b)->cost.rb)
 	{
 		(*b)->cost.rrb = 0;
 		// printf("DDDDDDDDDDDDDDDDDddddddddddddddddddddddddddddddddddddddddddddDDDDdd");
 	}
-	// printf("\n|%3d| %zu | %zu | %zu | %zu | %zu | %zu | %zu |\n", (*b)->value, (*b)->cost.ra, (*b)->cost.rb, (*b)->cost.rra, (*b)->cost.rrb, (*b)->cost.rr, (*b)->cost.rrr, (*b)->cost.total);
+	justice(list, b, up, down);
+	printf("\n|%3d| %zu | %zu | %zu | %zu | %zu | %zu | %zu |\n", (*b)->value, (*b)->cost.ra, (*b)->cost.rb, (*b)->cost.rra, (*b)->cost.rrb, (*b)->cost.rr, (*b)->cost.rrr, (*b)->cost.total);
 	while ((*b)->cost.ra > 0 && (*b)->cost.rb > 0)
 	{
 		(*b)->cost.ra--;
@@ -122,7 +123,22 @@ void	compare_cost(t_a **list, t_a **b, size_t len)
 		(*b)->cost.rrb--;
 		down = ++(*b)->cost.rrr;
 	}
-	justice(list, b, up, down);
+	printf("\n|%3d| %zu | %zu | %zu | %zu | %zu | %zu | %zu |\n", (*b)->value, (*b)->cost.ra, (*b)->cost.rb, (*b)->cost.rra, (*b)->cost.rrb, (*b)->cost.rr, (*b)->cost.rrr, (*b)->cost.total);
+}
+
+void	eyes(t_a *list)
+{
+	t_a	*temp;
+
+	temp = list->previous;
+	printf("\n\n\n|val|ra |rb |rra|rrb|rr |rrr|tot|\n");
+	while (1)
+	{
+		printf("\n|%3d| %zu | %zu | %zu | %zu | %zu | %zu | %zu |\n", list->value, list->cost.ra, list->cost.rb, list->cost.rra, list->cost.rrb, list->cost.rr, list->cost.rrr, list->cost.total);
+		if (list == temp)
+			break;
+		list = list->next;
+	}
 }
 
 static size_t	sum_total(t_a *node)
@@ -130,7 +146,8 @@ static size_t	sum_total(t_a *node)
 	t_cost	temp;
 	
 	temp = node->cost;
-	return (temp.ra + temp.rb + temp.rra + temp.rrb + temp.rr + temp.rrr);
+	printf("\n\t\t\t%d total = %zu", node->value, temp.ra + temp.rb + temp.rra + temp.rrb + temp.rr + temp.rrr);
+	return (temp.ra + temp.rb + temp.rra + temp.rrb + temp.rr + temp.rrr + 1);
 }
 
 void	pruc(t_a *list)
@@ -147,18 +164,21 @@ void	pruc(t_a *list)
 	temp = list;
 	temp->cost.total = sum_total(temp);
 	lowest = temp->cost.total;
-	// printf("|val|ra |rb |rra|rrb|rr |rrr|tot|");
+	// printf("\n|val|ra |rb |rra|rrb|rr |rrr|tot|");
 	// printf("\n\n|%3d| %zu | %zu | %zu | %zu | %zu | %zu | %zu |", temp->value, temp->cost.ra, temp->cost.rb, temp->cost.rra, temp->cost.rrb, temp->cost.rr, temp->cost.rrr, list->cost.total);
 	list = list->next;
 	while (list != temp)
 	{
 		list->cost.total = sum_total(list);
 		if (list->cost.total < lowest)
+		{
 			lowest = list->cost.total;
+			temp->cost.total = 0;
+		}
 		else
 		{
-			zero_cost(list);			// faire en sorte d'executer uniquement les instructions du bon node, booleen dans la struct ?
-			list->cost.total = -1;
+			// zero_cost(list);			// faire en sorte d'executer uniquement les instructions du bon node, booleen dans la struct ?
+			list->cost.total = 0;
 		}
 		// printf("\n\n|%3d| %zu | %zu | %zu | %zu | %zu | %zu | %zu |", list->value, list->cost.ra, list->cost.rb, list->cost.rra, list->cost.rrb, list->cost.rr, list->cost.rrr, list->cost.total);
 		list = list->next;
@@ -176,29 +196,35 @@ void	count_cost(t_a **list, t_a **b, size_t len, size_t b_len)
 	temp = (*b)->previous;
 	while (1)
 	{
-		zero_cost((*b));
+		// zero_cost((*b));
 		if ((*b) == temp)
 		{
 			def_cost(list, b, b_len, i);
 			sunk_cost(list, b, len - b_len);
-			compare_cost(list, b, len);
+			// compare_cost(list, b, len);
 			(*b) = (*b)->next;
+			eyes(temp->next);
 			break;
 		}
 		def_cost(list, b, b_len, i);
 		sunk_cost(list, b, len - b_len);
 	// pruc(temp->next);
-		compare_cost(list, b, len);
+		// compare_cost(list, b, len);
+		eyes(temp->next);
 		// if ((*b) == temp)
 		// 	break;
 		(*b) = (*b)->next;
 		i++;
 	}
-	// (*b) = (*b)->next;
 	pruc(temp->next);
+	eyes(temp->next);
+	// (*b) = (*b)->next;
 	// faire le check de tout les mouvements et les comparer
 } // faire le count des couts + le temp
 
 /* 
 	Here we are calculating the cost of moving each node to their right spot.
  */
+
+
+// ici changer la logique de compare cost pcq ca ne marche pas

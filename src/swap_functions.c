@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 00:47:00 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/21 19:45:50 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/22 15:07:17 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_a	*swap_elements(t_a *list, size_t length, char c)
 
 	if (length == 1)
 		return (list);
-	printf("s%c\n", c);
+	ft_printf("s%c\n", c);
 	tmp = list->next;
 	list->previous->next = tmp;
 	tmp->next->previous = list;
@@ -35,7 +35,7 @@ void	push(t_a **src, t_a **dest, char c)
 {
 	t_a	*tmp;
 
-	printf("p%c\n", c);
+	ft_printf("p%c\n", c);
 	(*src)->previous->next = (*src)->next;
 	(*src)->next->previous = (*src)->previous;
 	tmp = (*src);

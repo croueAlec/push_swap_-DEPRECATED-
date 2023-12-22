@@ -4,3 +4,5 @@ a.out
 */*.a
 */*.o
 push_swap
+push_swap_old
+visualizer

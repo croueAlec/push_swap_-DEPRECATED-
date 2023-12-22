@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 13:36:26 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/21 19:37:01 by acroue           ###   ########.fr       */
+/*   Updated: 2023/12/22 15:26:41 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,17 @@ void	free_list(t_a *list)
 	if (!list)
 		return ;
 	temp = list->previous;
-	printf("\nfree");
+	// printf("\nfree");
 	while (list != temp)
 	{
-		printf(", %d", list->value);
+		// printf(", %d", list->value);
 		next = list->next;
 		free(list);
 		list = next;
 	}
-	printf(", %d", temp->value);
+	// printf(", %d", temp->value);
 	free(temp);
-	printf("\n");
+	// printf("\n");
 }
 
 void	lprint(t_a *list)
@@ -107,26 +107,27 @@ int	main(int argc, char *argv[])
 	if (!check_tab(list, list_length))
 		return (free(tmp), free(str), 0);
 	list = check_rank(list, list_length);
-	lprint(list);
-	printf("\n\n");
+	// lprint(list);
+	// printf("\n\n");
 	n = move_b(&list, &b, list_length);
-	lprint(list);
-	printf("\nB [\n");
-	lprint(b);
-	printf("\n]\n");
+	// lprint(list);
+	// printf("\nB [\n");
+	// lprint(b);
+	// printf("\n]\n");
 	// rotate(&list, &b, "a");
 	// rotate(&list, &b, "b");
 	sort_three(&list, list_length - n);
+	lprint(list);
 	count_cost(&list, &b, list_length, n);
-	lprint(list);
-	printf("\nB [\n");
-	lprint(b);
-	printf("\n]\n");
-	applied_energistics(list, b, list_length, n);
-	lprint(list);
-	printf("\nB [\n");
-	lprint(b);
-	printf("\n]\n");
+	// lprint(list);
+	// printf("\nB [\n");
+	// lprint(b);
+	// printf("\n]\n");
+	// applied_energistics(list, b, list_length, n);
+	// lprint(list);
+	// printf("\nB [\n");
+	// lprint(b);
+	// printf("\n]\n");
 	free_list(list);
 	// printf("\npremier free%d\n", b->value);
 	// free_list(b);
