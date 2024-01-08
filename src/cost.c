@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 17:08:28 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/22 19:05:14 by acroue           ###   ########.fr       */
+/*   Updated: 2024/01/08 19:25:27 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,71 @@ void	def_cost(t_a **list, t_a **b, size_t length, size_t index)
 	i = 0;
 	(*b)->cost.rrb = length - index; // si on est plus proche de la fin alors move down
 	(*b)->cost.rb = index; // si + proche du debut alors move up
+}
+
+size_t	up_or_down(size_t ra, size_t rb, size_t rra, size_t rrb)
+{
+	size_t	up;
+	size_t	down;
+
+	up = ra;
+	down = rra;
+	if (rb > ra)
+		up = rb;
+	if (rrb > rra)
+		down = rrb;
+	printf("\nHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH %zu\t%zu\t", up, down);
+	if (down > up)
+		return (1);
+	return (2);
+}
+
+/*	The function above finds the shortest path between using only rX or rrX
+	returning either 1 or 2 respectively */
+
+size_t	is_diag(size_t ra, size_t rb, size_t rra, size_t rrb)
+{
+	size_t	high_low;
+	size_t	low_high;
+
+	high_low = ra + rrb;
+	low_high = rb + rra;
+	printf("%zu\t%zu\n", high_low, low_high);
+	if (high_low > low_high)
+		return (1);
+	return (2);
+}
+
+/*	The function above finds the shortest path between going from the
+	bottom of b to the top of a or the opposite returning 1 or 2 respectively*/
+
+void	pasteque(t_a **b)
+{
+	t_a		*prev;
+	size_t	up_down;
+	size_t	diag;
+	t_cost	cst;
+
+	prev = (*b)->previous;
+	while (1)
+	{
+		ft_memcpy(&cst, &((*b)->cost), sizeof(t_cost));
+		up_down = up_or_down(cst.ra, cst.rb, cst.rra, cst.rrb);
+		diag = is_diag(cst.ra, cst.rb, cst.rra, cst.rrb);
+		zero_cost((*b));
+		if ((up_down == 1 && up_down < diag) || (diag == 1 && diag < up_down))
+			(*b)->cost.ra = cst.ra;
+		if ((up_down == 1 && up_down < diag) || (diag == 2 && diag < up_down))
+			(*b)->cost.rb = cst.rb;
+		if ((up_down == 2 && up_down < diag) || (diag == 1 && diag < up_down))
+			(*b)->cost.rra = cst.rra;
+		if ((up_down == 2 && up_down < diag) || (diag == 2 && diag < up_down))
+			(*b)->cost.rrb = cst.rrb;
+		(*b) = (*b)->next;
+		if ((*b) == prev)
+			break;
+	}
+	(*b) = (*b)->next;
 }
 
 void	sunk_cost(t_a **list, t_a **b, size_t len)
@@ -192,6 +257,8 @@ void	count_cost(t_a **list, t_a **b, size_t len, size_t b_len)
 	size_t	i;
 
 	// printf("\nPREMIER = %d\n", (*b)->value);
+	list = NULL;
+	len = b_len;
 	i = 0;
 	temp = (*b)->previous;
 	while (1)
@@ -199,17 +266,19 @@ void	count_cost(t_a **list, t_a **b, size_t len, size_t b_len)
 		// zero_cost((*b));
 		if ((*b) == temp)
 		{
-			def_cost(list, b, b_len, i);
-			sunk_cost(list, b, len - b_len);
+			// def_cost(list, b, b_len, i);
+			// sunk_cost(list, b, len - b_len);
 			// compare_cost(list, b, len);
+			pasteque(b);
 			(*b) = (*b)->next;
 			eyes(temp->next);
 			break;
 		}
-		def_cost(list, b, b_len, i);
-		sunk_cost(list, b, len - b_len);
+		// def_cost(list, b, b_len, i);
+		// sunk_cost(list, b, len - b_len);
 	// pruc(temp->next);
 		// compare_cost(list, b, len);
+		pasteque(b);
 		eyes(temp->next);
 		// if ((*b) == temp)
 		// 	break;
