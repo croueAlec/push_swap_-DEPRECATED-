@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 17:08:28 by acroue            #+#    #+#             */
-/*   Updated: 2024/01/10 11:47:06 by acroue           ###   ########.fr       */
+/*   Updated: 2024/01/10 14:57:31 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,19 +109,22 @@ void	def_cost(t_a **list, t_a **b, size_t length, size_t index)
 	(*b)->cost.rb = index; // si + proche du debut alors move up
 }
 
-int	find_last_pos(t_a **list)
+int	find_last_pos(t_a *list)
 {
 	t_a	*prev;
 	int	i;
 
 	i = 0;
-	prev = (*list)->previous;
-	while ((*list)->rank > (*list)->next->rank)
+	prev = (list)->previous;
+	eyes((list));
+	while ((list)->rank < (list)->next->rank)
 	{
 		i++;
+		printf("%d\n", i);
+		(list) = (list)->next;
 	}
-	printf("\t\t\t%d", i);
-	return (i);
+	// printf("\t\t\t%d", i);
+	return (i + 1);
 } // mettre un break sur le find last pos, tester avec 11 6 2 5 13 8 17 20 7 3 10 16 9 4 12 14 19 18 1 15
 
 void	find_pos(t_a **list, t_a **b, size_t len)
@@ -143,7 +146,10 @@ void	find_pos(t_a **list, t_a **b, size_t len)
 		}
 		i++;
 		if ((*list) == prev && res == -1)
-			res_i = find_last_pos(&prev->next);
+		{
+			eyes(prev);
+			res_i = find_last_pos(prev->next);
+		}
 		if ((*list) == prev)
 			break;
 		(*list) = (*list)->next;
@@ -248,10 +254,10 @@ void	eyes(t_a *list)
 	t_a	*temp;
 
 	temp = list->previous;
-	// printf("\n\n\n|val|ra |rb |rra|rrb|rr |rrr|tot|\n");
+	printf("\n\n\n|val|ra |rb |rra|rrb|rr |rrr|tot|\n");
 	while (1)
 	{
-		// printf("\n|%3d| %zu | %zu | %zu | %zu | %zu | %zu | %zu |\n", list->value, list->cost.ra, list->cost.rb, list->cost.rra, list->cost.rrb, list->cost.rr, list->cost.rrr, list->cost.total);
+		printf("\n|%3d| %zu | %zu | %zu | %zu | %zu | %zu | %zu |\n", list->value, list->cost.ra, list->cost.rb, list->cost.rra, list->cost.rrb, list->cost.rr, list->cost.rrr, list->cost.total);
 		if (list == temp)
 			break;
 		list = list->next;
@@ -345,7 +351,7 @@ void	count_cost(t_a **list, t_a **b, size_t len, size_t b_len)
 		{
 			def_cost(list, b, b_len, i);
 			// sunk_cost(list, b, len - b_len);
-			find_pos(list, b, len -b_len);
+			find_pos(list, b, len - b_len);
 			// compare_cost(list, b, len);
 			// pasteque(b);
 			(*b) = (*b)->next;
@@ -353,10 +359,10 @@ void	count_cost(t_a **list, t_a **b, size_t len, size_t b_len)
 		}
 		def_cost(list, b, b_len, i);
 		// sunk_cost(list, b, len - b_len);
-		find_pos(list, b, len -b_len);
+		find_pos(list, b, len - b_len);
+		// eyes(temp->next);
 	// pruc(temp->next);
 		// compare_cost(list, b, len);
-		// eyes(temp->next);
 		// if ((*b) == temp)
 		// 	break;
 		(*b) = (*b)->next;

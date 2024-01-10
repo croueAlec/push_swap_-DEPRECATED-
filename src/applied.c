@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 19:16:04 by acroue            #+#    #+#             */
-/*   Updated: 2024/01/10 10:44:53 by acroue           ###   ########.fr       */
+/*   Updated: 2024/01/10 15:13:12 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,12 @@ size_t	applied_energistics_2(t_a *list, size_t len)
 void	applied_energistics(t_a *list, t_a *b, size_t len, size_t b_len)
 {
 	// size_t	offset;
-
 	while (b_len)
 	{
+		if (b->value == 2)
+			fprintf(stderr, "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD\n");
 		count_cost(&list, &b, len, b_len);
+		// lprint(list);
 		// printf("\n\t\t\t\t%zu\n", b_len);
 		// printf("\n current rb:%zu\n", b->cost.rb);
 		while (b->cost.rb--)
@@ -73,3 +75,6 @@ void	applied_energistics(t_a *list, t_a *b, size_t len, size_t b_len)
 	rotate(&list, &b, "ra");
 	// offset = applied_energistics_2(list, len);
 }
+
+
+/* 11 6 2 5 13 8 17 20 7 3 10 16 9 4 12 14 19 18 1 15 tester ca et fix le 2 qui ne va pas au bon endroit */

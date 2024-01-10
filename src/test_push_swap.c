@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 13:36:26 by acroue            #+#    #+#             */
-/*   Updated: 2024/01/10 10:41:24 by acroue           ###   ########.fr       */
+/*   Updated: 2024/01/10 14:32:19 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int	main(int argc, char *argv[])
 	// rotate(&list, &b, "a");
 	// rotate(&list, &b, "b");
 	sort_three(&list, list_length - n);
-	// lprint(list);
+	lprint(list);
 	// count_cost(&list, &b, list_length, n);
 	// lprint(list);
 	// printf("\nB [\n");

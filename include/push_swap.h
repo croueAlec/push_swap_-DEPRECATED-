@@ -6,7 +6,7 @@
 /*   By: acroue <acroue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 14:56:44 by acroue            #+#    #+#             */
-/*   Updated: 2023/12/21 19:41:44 by acroue           ###   ########.fr       */
+/*   Updated: 2024/01/10 12:54:45 by acroue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@ int		is_node_sorted(t_a *list, t_a *next);
 int		is_list_sorted(t_a *list);
 void	sort_three(t_a **list, size_t length);
 void	sorting(t_a **list, t_a **b, size_t length);
+void	eyes(t_a *list);
 
 #endif
