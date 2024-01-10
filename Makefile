@@ -6,7 +6,7 @@
 #    By: acroue <acroue@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/11 11:51:52 by acroue            #+#    #+#              #
-#    Updated: 2023/12/21 19:26:55 by acroue           ###   ########.fr        #
+#    Updated: 2024/01/09 16:33:14 by acroue           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,3 +84,6 @@ gx2: cre
 	@gdb --args ./push_swap "20 30 40 -10 50 90 80 60 70 100 51"
 
 .PHONY = all clean fclean re norm
+
+check : cre
+	@./push_swap "20 30 40 -10 50 90 80 60 70 100 51" | ./checker_linux "20 30 40 -10 50 90 80 60 70 100 51"
